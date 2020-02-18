@@ -1,5 +1,10 @@
 <RCC>
   <qresource prefix="images">
+    <file>logos/test.png</file>
+    <file>logos/m&amp;ms.png</file>
+    <file>logos/milkyway.png</file>
+    <file>logos/snickers.png</file>
+    <file>logos/twix.png</file>
     <file>venmo.jpg</file>
   </qresource>
 </RCC>

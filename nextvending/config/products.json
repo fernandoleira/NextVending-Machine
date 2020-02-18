@@ -1,0 +1,26 @@
+{
+    "PRODUCT_1": {
+        "title": "M&Ms",
+        "cover": "nextvending/assets/img/logos/m&ms.png",
+        "price": 1.0,
+        "quantity": 5
+    },
+    "PRODUCT_2": {
+        "title": "Milky Way",
+        "cover": "nextvending/assets/img/logos/milkyway.png",
+        "price": 1.5,
+        "quantity": 4
+    },
+    "PRODUCT_3": {
+        "title": "Snickers",
+        "cover": "nextvending/assets/img/logos/snickers.png",
+        "price": 2.5,
+        "quantity": 6
+    },
+    "PRODUCT_4": {
+        "title": "Twix",
+        "cover": "nextvending/assets/img/logos/twix.png",
+        "price": 2.0,
+        "quantity": 2
+    }
+}
