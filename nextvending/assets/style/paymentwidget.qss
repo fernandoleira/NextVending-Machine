@@ -1,0 +1,10 @@
+/**********************************************************
+
+PaymentWidget Stylesheet
+
+**********************************************************/
+
+QWidget#PaymentWidget {
+    background-repeat: no-repeat;
+    background-position: center;
+}

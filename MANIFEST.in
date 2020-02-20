@@ -1,0 +1,3 @@
+recursive-include nextvending/config *
+recursive-include nextvending/assets/img *
+recursive-include nextvending/assets/style *
