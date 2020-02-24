@@ -130,3 +130,6 @@ dmypy.json
 
 # Local Test
 tests-local
+
+# VSCode Docs
+.vscode
