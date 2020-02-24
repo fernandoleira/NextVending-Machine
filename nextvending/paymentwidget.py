@@ -1,11 +1,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class PaymentWidget(QtWidgets.QWidget):
+class PaymentWidget(QtWidgets.QFrame):
     def __init__(self):
-        QtWidgets.QWidget.__init__(self)
+        QtWidgets.QFrame.__init__(self)
         self.setObjectName("PaymentWidget")
-        self.resize(355, 464)
         
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")

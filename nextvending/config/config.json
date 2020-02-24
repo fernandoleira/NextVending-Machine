@@ -1,6 +1,6 @@
 {
     "VENDING_DATA": {
-        "CURRENT_BALANCE": 0
+        "CURRENT_BALANCE": 0.00
     },
     "REQUEST_DATA": {
         "LOGIN_URL": "https://venmo.com/"

@@ -5,13 +5,12 @@ from selectionwidget import SelectionWidget
 
 
 class MainView(QtWidgets.QWidget):
-    def __init__(self, conf, selections):
+    def __init__(self, conf, products):
         QtWidgets.QWidget.__init__(self)
         self.setObjectName("MainView")
-        self.resize(500, 750)
 
         self._conf = conf
-        self._selections = selections
+        self._products = products
 
         self.verticalLayout = QtWidgets.QVBoxLayout(self)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -32,7 +31,7 @@ class MainView(QtWidgets.QWidget):
         self.verticalLayout.addWidget(self.titleLabel)
 
         self.paymentWidget = PaymentWidget()
-        self.selectionWidget = SelectionWidget()
+        self.selectionWidget = SelectionWidget(self._products)
 
         self.centralWidgets = QtWidgets.QStackedWidget()
         self.centralWidgets.setObjectName("centralWidgets")
