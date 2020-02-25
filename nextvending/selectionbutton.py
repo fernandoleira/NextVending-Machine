@@ -2,6 +2,9 @@ import os
 from PyQt5 import Qt, QtCore, QtGui, QtWidgets
 
 
+class SelectionButtonSignals(QtCore.QObject):
+    purchase_request = QtCore.pyqtSignal(float) 
+
 class SelectionButton(QtWidgets.QFrame):
     def __init__(self, selection_item):
         QtWidgets.QFrame.__init__(self)
@@ -10,7 +13,10 @@ class SelectionButton(QtWidgets.QFrame):
         self.setMinimumSize(self.width(), self.height())
         self.setMaximumSize(self.width(), self.height())
 
+        self.signals = SelectionButtonSignals()
+
         # Parse the information in the selection_item object
+        self.available = True
         self.coverPath = selection_item["cover"]
         self.name = selection_item["title"]
         self.price = selection_item["price"]
@@ -37,9 +43,9 @@ class SelectionButton(QtWidgets.QFrame):
 
         # Shadow effect for the button frame
         self.shadow = QtWidgets.QGraphicsDropShadowEffect()
-        self.shadow.setXOffset(2)
-        self.shadow.setYOffset(2)
-        self.shadow.setBlurRadius(4)
+        self.shadow.setXOffset(5)
+        self.shadow.setYOffset(5)
+        self.shadow.setBlurRadius(12)
         self.shadow.setColor(QtGui.QColor("#888"))
 
         # Mouse events
@@ -58,7 +64,15 @@ class SelectionButton(QtWidgets.QFrame):
 
     def check_quantity_available(self):
         if self.quantity == 0:
-            self.setStyleSheet('background-color: red; color: #fff;')
+            self.setStyleSheet('background-color: #D01F3B; color: #FFFFFF;')
+    
+    def check_price_available(self, balance):
+        if self.price > balance or self.quantity == 0:
+            self.available = False
+            self.setStyleSheet('background-color: #D01F3B; color: #FFFFFF;') 
+        else:
+            self.available = True
+            self.setStyleSheet('background-color: #FFFFFF; color: #000000;') 
 
     def button_pressed(self, event):
         self.shadow_setup(0)
@@ -66,9 +80,11 @@ class SelectionButton(QtWidgets.QFrame):
 
     def button_released(self, event):
         self.shadow_setup(1)
-        print("Released")
+        if self.available:
+            print(self.price)
+            self.signals.purchase_request.emit(self.price)
 
     def shadow_setup(self, flag):
-        self.shadow.setXOffset(flag*2)
-        self.shadow.setYOffset(flag*2)
-        self.shadow.setBlurRadius(flag*4)
+        self.shadow.setXOffset(flag*5)
+        self.shadow.setYOffset(flag*5)
+        self.shadow.setBlurRadius(flag*12)

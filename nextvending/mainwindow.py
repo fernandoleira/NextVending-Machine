@@ -10,7 +10,7 @@ class MainWindow(QtWidgets.QMainWindow):
         QtWidgets.QMainWindow.__init__(self)
         self.setObjectName("MainWindow")
         self.setWindowTitle("NextVending")
-        # self.showFullScreen()
+        #self.showFullScreen()
         self.resize(550, 800)
         self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint)
 

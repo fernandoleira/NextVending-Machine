@@ -1,3 +1,5 @@
+/* Black (#000000), White (#FFFFFF), Red (#D01F3B), Green (#9C9C68) */
+
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +9,22 @@
 MainView
 **********************************************************/
 
-QWidget#MainView {
-    background-color: red;
+QLabel#balanceLabel {
+    padding: 0px 0px 40px;
+    font-family: 'Arial';
+    font-weight: bold;
+}
+
+QPushButton {
+    margin-left: 50px;
+    padding: 10px 0px;
+    background-color: #9C9C68;
+    border: 4px solid #000000;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: 'Arial';
 }
 
 /**********************************************************
@@ -20,9 +36,9 @@ SelectionWidget
 QFrame#SelectionButton {
     padding: 10px 0px;
     text-align: center;
-    background-color: #fff;
-    border: 4px solid #333;
-    border-radius: 10px;
+    background-color: #FFFFFF;
+    border: 4px solid #000000;
+    border-radius: 5px;
 }
 
 QFrame#SelectionButton QLabel {
