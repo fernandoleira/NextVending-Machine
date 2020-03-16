@@ -1,8 +1,25 @@
 {
-    "VENDING_DATA": {
-        "CURRENT_BALANCE": 10.00
+    "TRANSACTIONS_DATA": {
+        "CURRENT_BALANCE": 10.00,
+        "LAST_PURCHASE": {
+            "TIMESTAMP": 0,
+            "PRODUCT": "",
+            "PRICE": 0.00,
+            "DATE": ""
+        },
+        "LAST_TRANSACTION": {
+            "TIMESTAMP": 0,
+            "AMOUNT": 0.00,
+            "FIRST_NAME": "",
+            "LAST_NAME": "",
+            "USERNAME": ""
+        }
     },
     "REQUEST_DATA": {
-        "LOGIN_URL": "https://venmo.com/"
+        "ORG_EMAIL": "",
+        "ORG_PWD": "",
+        "SMTP_SERVER": "outlook.office365.com",
+        "SMTP_PORT": 993,
+        "MAIL_BOX": "INBOX"
     }
 }

@@ -53,18 +53,13 @@ class SelectionButton(QtWidgets.QFrame):
         self.mouseReleaseEvent = self.button_released
 
         self.setup_button_labels()
-        self.check_quantity_available()
         self.setGraphicsEffect(self.shadow)
 
     def setup_button_labels(self):
-        self.coverImage = QtGui.QPixmap(os.path.join(os.getcwd(), "nextvending", "assets", "img", "logos", "test.png"))
+        self.coverImage = QtGui.QPixmap(os.path.join(os.getcwd(), "nextvending", self.coverPath))
         self.coverLabel.setPixmap(self.coverImage)
         self.nameLabel.setText(self.name)
         self.priceLabel.setText("${:0.2f}".format(self.price))
-
-    def check_quantity_available(self):
-        if self.quantity == 0:
-            self.setStyleSheet('background-color: #D01F3B; color: #FFFFFF;')
     
     def check_price_available(self, balance):
         if self.price > balance or self.quantity == 0:

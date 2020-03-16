@@ -12,7 +12,7 @@ class MainView(QtWidgets.QWidget):
         self._conf = conf
         self._products = products
 
-        self.balance = self._conf["VENDING_DATA"]["CURRENT_BALANCE"]
+        self.balance = self._conf["TRANSACTIONS_DATA"]["CURRENT_BALANCE"]
 
         self.verticalLayout = QtWidgets.QVBoxLayout(self)
         self.verticalLayout.setObjectName("verticalLayout")

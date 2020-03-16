@@ -12,7 +12,7 @@ class SelectionWidget(QtWidgets.QWidget):
         self.setObjectName("SelectionWidget")
 
         self.signals = SelectionSignals()
-        self.current_balance = current_balance
+        self.current_balance = 0
 
         self.gridLayout = QtWidgets.QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
@@ -29,6 +29,7 @@ class SelectionWidget(QtWidgets.QWidget):
         self.selectButton_4 = SelectionButton(products["PRODUCT_4"])
         self.gridLayout.addWidget(self.selectButton_4, 1, 1, 1, 1)
 
+        self.update_balance(current_balance)
         self.connect_button_signals()
         
 
