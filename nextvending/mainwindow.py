@@ -20,8 +20,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.add_window_actions()
 
         # Initialize the main view
-        self.mainView = MainView(self.parse_file(
-            'config.json'), self.parse_file('products.json'))
+        self.mainView = MainView(self.parse_file('config.json'), self.parse_file('products.json'))
+        self.mainView.signals.log.connect(self.print_log)
         self.setCentralWidget(self.mainView)
 
     # Function to add the respective action shorcuts of the MainWindow
@@ -31,11 +31,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.closeAction.setShortcut("Ctrl+Q")
         self.closeAction.triggered.connect(self.close_app)
         self.addAction(self.closeAction)
-
-    # Function to print logs in the console with the correct format
-    def print_log(self, message):
-        print("[{}] {}".format(datetime.now().strftime(
-            "%Y/%b/%d:%H:%m:%S"), message))
 
     # Function to retreive data from an external config file
     def parse_file(self, conf_fn):
@@ -51,6 +46,10 @@ class MainWindow(QtWidgets.QMainWindow):
         return data
 
     # ============================== SLOTS ==============================
+    # Function to print logs in the console with the correct format
+    @QtCore.pyqtSlot(dict)
+    def print_log(self, log_object):
+        print("[{}] {}".format(datetime.now().strftime("%Y/%b/%d:%H:%m:%S"), log_object['msg']))
 
     @QtCore.pyqtSlot()
     def close_app(self):

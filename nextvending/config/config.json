@@ -4,22 +4,15 @@
         "LAST_PURCHASE": {
             "TIMESTAMP": 0,
             "PRODUCT": "",
-            "PRICE": 0.00,
-            "DATE": ""
-        },
-        "LAST_TRANSACTION": {
-            "TIMESTAMP": 0,
-            "AMOUNT": 0.00,
-            "FIRST_NAME": "",
-            "LAST_NAME": "",
-            "USERNAME": ""
+            "PRICE": 0.00
         }
     },
-    "REQUEST_DATA": {
-        "ORG_EMAIL": "",
-        "ORG_PWD": "",
-        "SMTP_SERVER": "outlook.office365.com",
-        "SMTP_PORT": 993,
-        "MAIL_BOX": "INBOX"
+    "MAIL_CLIENT": {
+        "IMAP_EMAIL": "",
+        "IMAP_PWD": "",
+        "IMAP_SERVER": "outlook.office365.com",
+        "IMAP_PORT": 993,
+        "MAIL_BOX": "INBOX",
+        "DEL_MAIL_BOX": "NextVending"
     }
 }

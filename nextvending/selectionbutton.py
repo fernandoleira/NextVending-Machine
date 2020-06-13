@@ -1,9 +1,11 @@
-import os
+from os import path, getcwd
+from datetime import datetime
 from PyQt5 import Qt, QtCore, QtGui, QtWidgets
 
 
-class SelectionButtonSignals(QtCore.QObject):
-    purchase_request = QtCore.pyqtSignal(float) 
+class SelectionSignals(QtCore.QObject):
+    purchase_request = QtCore.pyqtSignal(dict)
+
 
 class SelectionButton(QtWidgets.QFrame):
     def __init__(self, selection_item):
@@ -13,7 +15,7 @@ class SelectionButton(QtWidgets.QFrame):
         self.setMinimumSize(self.width(), self.height())
         self.setMaximumSize(self.width(), self.height())
 
-        self.signals = SelectionButtonSignals()
+        self.signals = SelectionSignals()
 
         # Parse the information in the selection_item object
         self.available = True
@@ -28,17 +30,20 @@ class SelectionButton(QtWidgets.QFrame):
         # Labels setup
         self.coverLabel = QtWidgets.QLabel()
         self.coverLabel.setObjectName("coverLabel")
-        self.coverLabel.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
+        self.coverLabel.setAlignment(
+            QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
         self.verticalLayout.addWidget(self.coverLabel)
-        
+
         self.nameLabel = QtWidgets.QLabel()
         self.nameLabel.setObjectName("nameLabel")
-        self.nameLabel.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
+        self.nameLabel.setAlignment(
+            QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
         self.verticalLayout.addWidget(self.nameLabel)
-        
+
         self.priceLabel = QtWidgets.QLabel()
         self.priceLabel.setObjectName("priceLabel")
-        self.priceLabel.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
+        self.priceLabel.setAlignment(
+            QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
         self.verticalLayout.addWidget(self.priceLabel)
 
         # Shadow effect for the button frame
@@ -56,30 +61,43 @@ class SelectionButton(QtWidgets.QFrame):
         self.setGraphicsEffect(self.shadow)
 
     def setup_button_labels(self):
-        self.coverImage = QtGui.QPixmap(os.path.join(os.getcwd(), "nextvending", self.coverPath))
+        self.coverImage = QtGui.QPixmap(
+            path.join(getcwd(), "nextvending", self.coverPath))
         self.coverLabel.setPixmap(self.coverImage)
         self.nameLabel.setText(self.name)
         self.priceLabel.setText("${:0.2f}".format(self.price))
-    
+
     def check_price_available(self, balance):
         if self.price > balance or self.quantity == 0:
             self.available = False
-            self.setStyleSheet('background-color: #D01F3B; color: #FFFFFF;') 
+            self.setStyleSheet('background-color: #D01F3B; color: #FFFFFF;')
         else:
             self.available = True
-            self.setStyleSheet('background-color: #FFFFFF; color: #000000;') 
-
-    def button_pressed(self, event):
-        self.shadow_setup(0)
-        print("Hello")
-
-    def button_released(self, event):
-        self.shadow_setup(1)
-        if self.available:
-            print(self.price)
-            self.signals.purchase_request.emit(self.price)
+            self.setStyleSheet('background-color: #FFFFFF; color: #000000;')
 
     def shadow_setup(self, flag):
         self.shadow.setXOffset(flag*5)
         self.shadow.setYOffset(flag*5)
         self.shadow.setBlurRadius(flag*12)
+
+    # ============================== EVENTS ==============================
+    def button_pressed(self, event):
+        self.shadow_setup(0)
+
+    def button_released(self, event):
+        self.shadow_setup(1)
+        if self.available:
+            self.quantity -= 1
+            if self.quantity == 0:
+                self.available = False
+                self.setStyleSheet(
+                    'background-color: #D01F3B; color: #FFFFFF;')
+
+            purchase_info = dict(
+                timestamp=int(datetime.timestamp(datetime.now())), 
+                item_name=self.name, 
+                price=self.price, 
+                quantity_left=self.quantity
+            )
+            print(purchase_info)
+            self.signals.purchase_request.emit(purchase_info)

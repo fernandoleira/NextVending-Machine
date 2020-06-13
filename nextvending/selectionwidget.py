@@ -4,7 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from selectionbutton import SelectionButton
 
 class SelectionSignals(QtCore.QObject):
-    purchase_signal = QtCore.pyqtSignal(float) 
+    new_purchase = QtCore.pyqtSignal(dict) 
 
 class SelectionWidget(QtWidgets.QWidget):
     def __init__(self, products, current_balance):
@@ -32,7 +32,6 @@ class SelectionWidget(QtWidgets.QWidget):
         self.update_balance(current_balance)
         self.connect_button_signals()
         
-
     def connect_button_signals(self):
         self.selectButton_1.signals.purchase_request.connect(self.send_new_purchase)
         self.selectButton_2.signals.purchase_request.connect(self.send_new_purchase)
@@ -46,6 +45,6 @@ class SelectionWidget(QtWidgets.QWidget):
         self.selectButton_3.check_price_available(self.current_balance)
         self.selectButton_4.check_price_available(self.current_balance)
 
-    @QtCore.pyqtSlot(float)
-    def send_new_purchase(self, purchase_price):
-        self.signals.purchase_signal.emit(purchase_price)
+    @QtCore.pyqtSlot(dict)
+    def send_new_purchase(self, purchase_info):
+        self.signals.new_purchase.emit(purchase_info)
