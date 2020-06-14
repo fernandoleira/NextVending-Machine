@@ -16,13 +16,13 @@ class MailClient:
         self.DEL_MAIL_BOX = mail_conf["MAIL_CLIENT"]["DEL_MAIL_BOX"]
 
         # Setup client and login
-        self.mail_client = imaplib.IMAP4_SSL(self.IMAP_SERVER)
+        self.mailClient = imaplib.IMAP4_SSL(self.IMAP_SERVER)
 
     # Function to open a new IMAP connection
     def open_mail_connection(self):
         try:
-            self.mail_client = imaplib.IMAP4_SSL(self.IMAP_SERVER)
-            self.mail_client.login(self.IMAP_EMAIL, self.IMAP_PWD)
+            self.mailClient = imaplib.IMAP4_SSL(self.IMAP_SERVER)
+            self.mailClient.login(self.IMAP_EMAIL, self.IMAP_PWD)
             return (1, "Connection established!")
 
         except Exception as ex:
@@ -31,16 +31,16 @@ class MailClient:
 
     # Function to close a current MailClient connection
     def close_mail_connection(self):
-        self.mail_client.close()
-        self.mail_client.logout()
+        self.mailClient.close()
+        self.mailClient.logout()
 
     #
     def get_last_transactions(self):
-        rv, data = self.mail_client.select(self.MAIL_BOX, readonly=True)
+        rv, data = self.mailClient.select(self.MAIL_BOX, readonly=True)
         if rv != 'OK':
             return (0, "There was an error with the mail client")  
 
-        rv, data = self.mail_client.search(None, '(FROM "Venmo")')
+        rv, data = self.mailClient.search(None, '(FROM "Venmo")')
         if rv != 'OK':
             return (0, "There was an error with the mail client")
 
@@ -51,7 +51,7 @@ class MailClient:
 
         last_transactions = list()
         for id in mail_ids:
-            rv, data = self.mail_client.fetch(mail_ids[0], '(RFC822)')
+            rv, data = self.mailClient.fetch(mail_ids[0], '(RFC822)')
             if rv != 'OK':
                 return (0, "There was an error with the mail client")
 
@@ -75,8 +75,8 @@ class MailClient:
             last_transactions.append(transaction)
 
         # Copy Emails into saved folder and delete them from the Inbox    
-        #self.mail_client.copy(" ".join(mail_ids), self.DEL_MAIL_BOX)
-        #self.mail_client.expunge()
+        #self.mailClient.copy(" ".join(mail_ids), self.DEL_MAIL_BOX)
+        #self.mailClient.expunge()
 
         return (1, last_transactions)
 

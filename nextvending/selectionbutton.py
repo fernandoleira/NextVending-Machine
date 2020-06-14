@@ -20,7 +20,7 @@ class SelectionButton(QtWidgets.QFrame):
         # Parse the information in the selection_item object
         self.available = True
         self.coverPath = selection_item["cover"]
-        self.name = selection_item["title"]
+        self.name = selection_item["name"]
         self.price = selection_item["price"]
         self.quantity = selection_item["quantity"]
 
@@ -95,9 +95,9 @@ class SelectionButton(QtWidgets.QFrame):
 
             purchase_info = dict(
                 timestamp=int(datetime.timestamp(datetime.now())), 
-                item_name=self.name, 
-                price=self.price, 
-                quantity_left=self.quantity
+                product_name=self.name, 
+                product_price=self.price, 
+                product_remaining_quantity=self.quantity
             )
-            print(purchase_info)
+
             self.signals.purchase_request.emit(purchase_info)

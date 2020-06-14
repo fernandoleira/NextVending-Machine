@@ -10,7 +10,8 @@ class PaymentWidget(QtWidgets.QFrame):
         self.verticalLayout.setObjectName("verticalLayout")
 
         self.QRCode = QtWidgets.QGraphicsView()
-        self.QRCode.setStyleSheet("background-image: url(nextvending/assets/img/venmo.jpg);")
+        self.QRCode.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.QRCode.setStyleSheet("background-image: url(nextvending/assets/img/payment/venmo.jpg);")
         self.QRCode.setObjectName("QRCode")
         self.verticalLayout.addWidget(self.QRCode)
         self.setLayout(self.verticalLayout)

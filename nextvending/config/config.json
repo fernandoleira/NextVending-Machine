@@ -1,4 +1,13 @@
 {
+    "MACHINE_PROFILE": {
+        "MACHINE_ID": "00000000-0000-0000-0000-000000000001",
+        "OWNER_ORG": "Fernando Leira Cortel",
+        "OWNER_FULL_NAME": "Fernando Leira Cortel",
+        "OWNER_EMAIL": "LeiraFernandoCortel@gmail.com",
+        "OWNER_PHONE_NUMBER": "305-766-8986",
+        "OWNER_USERNAME": "fleira98",
+        "OWNER_ID": "00000000-0000-0000-0000-000000000001"
+    },
     "TRANSACTIONS_DATA": {
         "CURRENT_BALANCE": 10.00,
         "LAST_PURCHASE": {

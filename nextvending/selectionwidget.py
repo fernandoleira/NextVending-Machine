@@ -29,8 +29,9 @@ class SelectionWidget(QtWidgets.QWidget):
         self.selectButton_4 = SelectionButton(products["PRODUCT_4"])
         self.gridLayout.addWidget(self.selectButton_4, 1, 1, 1, 1)
 
-        self.update_balance(current_balance)
         self.connect_button_signals()
+
+        self.update_balance(current_balance)
         
     def connect_button_signals(self):
         self.selectButton_1.signals.purchase_request.connect(self.send_new_purchase)

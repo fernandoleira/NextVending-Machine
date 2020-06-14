@@ -1,10 +1,17 @@
 <RCC>
   <qresource prefix="images">
+    <file>brand/logo.png</file>
+    <file>brand/full_logo.jpg</file>
+    
     <file>logos/test.png</file>
     <file>logos/m&amp;ms.png</file>
     <file>logos/milkyway.png</file>
     <file>logos/snickers.png</file>
     <file>logos/twix.png</file>
-    <file>venmo.jpg</file>
+
+    <file>gifs/loading.gif</file>
+    <file>gifs/checkmark.gif</file>
+
+    <file>payment/venmo.jpg</file>
   </qresource>
 </RCC>
