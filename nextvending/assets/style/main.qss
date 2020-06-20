@@ -9,13 +9,13 @@
 MainView
 **********************************************************/
 
-QLabel#balanceLabel {
+QLabel#BalanceLabel {
     padding: 0px 0px 40px;
     font-family: 'Arial';
     font-weight: bold;
 }
 
-QPushButton {
+QPushButton#ControlButton {
     margin-left: 50px;
     padding: 10px 0px;
     background-color: #9C9C68;

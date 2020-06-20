@@ -8,21 +8,21 @@ from datetime import datetime
 class MailClient:
     def __init__(self, mail_conf):
         # Email IMAP parameters
-        self.IMAP_EMAIL = os.getenv("IMAP_EMAIL")
-        self.IMAP_PWD = os.getenv("IMAP_PWD")
-        self.IMAP_SERVER = mail_conf["MAIL_CLIENT"]["IMAP_SERVER"]
-        self.IMAP_PORT = mail_conf["MAIL_CLIENT"]["IMAP_PORT"]
-        self.MAIL_BOX = mail_conf["MAIL_CLIENT"]["MAIL_BOX"]
-        self.DEL_MAIL_BOX = mail_conf["MAIL_CLIENT"]["DEL_MAIL_BOX"]
+        self._IMAP_EMAIL = os.getenv("IMAP_EMAIL")
+        self._IMAP_PWD = os.getenv("IMAP_PWD")
+        self._IMAP_SERVER = mail_conf["MAIL_CLIENT"]["IMAP_SERVER"]
+        self._IMAP_PORT = mail_conf["MAIL_CLIENT"]["IMAP_PORT"]
+        self._MAIL_BOX = mail_conf["MAIL_CLIENT"]["MAIL_BOX"]
+        self._DEL_MAIL_BOX = mail_conf["MAIL_CLIENT"]["DEL_MAIL_BOX"]
 
         # Setup client and login
-        self.mailClient = imaplib.IMAP4_SSL(self.IMAP_SERVER)
+        self.mailClient = imaplib.IMAP4_SSL(self._IMAP_SERVER)
 
     # Function to open a new IMAP connection
     def open_mail_connection(self):
         try:
-            self.mailClient = imaplib.IMAP4_SSL(self.IMAP_SERVER)
-            self.mailClient.login(self.IMAP_EMAIL, self.IMAP_PWD)
+            self.mailClient = imaplib.IMAP4_SSL(self._IMAP_SERVER)
+            self.mailClient.login(self._IMAP_EMAIL, self._IMAP_PWD)
             return (1, "Connection established!")
 
         except Exception as ex:
@@ -36,7 +36,7 @@ class MailClient:
 
     #
     def get_last_transactions(self):
-        rv, data = self.mailClient.select(self.MAIL_BOX, readonly=True)
+        rv, data = self.mailClient.select(self._MAIL_BOX, readonly=True)
         if rv != 'OK':
             return (0, "There was an error with the mail client")  
 
@@ -75,7 +75,7 @@ class MailClient:
             last_transactions.append(transaction)
 
         # Copy Emails into saved folder and delete them from the Inbox    
-        #self.mailClient.copy(" ".join(mail_ids), self.DEL_MAIL_BOX)
+        #self.mailClient.copy(" ".join(mail_ids), self._DEL_MAIL_BOX)
         #self.mailClient.expunge()
 
         return (1, last_transactions)

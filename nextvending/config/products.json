@@ -1,23 +1,27 @@
 {
     "PRODUCT_1": {
+        "product_id": "5ff14ec5-b133-4658-a72b-601e918cb668",
         "name": "M&Ms",
         "cover": "assets/img/logos/m&ms.png",
         "price": 1.00,
         "quantity": 5
     },
     "PRODUCT_2": {
+        "product_id": "2413ce07-dabd-48d0-95cf-4446f97f83cc",
         "name": "Milky Way",
         "cover": "assets/img/logos/milkyway.png",
         "price": 1.50,
         "quantity": 4
     },
     "PRODUCT_3": {
+        "product_id": "5cf06d75-7c56-48af-bdfe-8e54be0d73d9",
         "name": "Snickers",
         "cover": "assets/img/logos/snickers.png",
         "price": 2.50,
         "quantity": 0
     },
     "PRODUCT_4": {
+        "product_id": "15c8e0e3-2f7b-477f-926f-b2e938b159f0",
         "name": "Twix",
         "cover": "assets/img/logos/twix.png",
         "price": 2.00,

@@ -19,7 +19,7 @@ class MainView(QtWidgets.QWidget):
 
         self.mailClient = MailClient(self._conf)
 
-        self.balance = self._conf["TRANSACTIONS_DATA"]["CURRENT_BALANCE"]
+        self.balance = self._conf["PRODUCT_TRANSACTIONS"]["CURRENT_BALANCE"]
 
         self.paymentWidget = PaymentWidget()
 
@@ -57,7 +57,7 @@ class MainView(QtWidgets.QWidget):
         self.balanceLabel.setFont(font)
         self.balanceLabel.setAlignment(
             QtCore.Qt.AlignVCenter | QtCore.Qt.AlignHCenter)
-        self.balanceLabel.setObjectName("balanceLabel")
+        self.balanceLabel.setObjectName("BalanceLabel")
         self.balanceLabel.setText("${:0.2f}".format(self.balance))
         self.verticalLayout.addWidget(self.balanceLabel)
 
@@ -113,6 +113,8 @@ class MainView(QtWidgets.QWidget):
         self.balance -= purchase_info['product_price']
         self.balanceLabel.setText("${:0.2f}".format(self.balance))
         self.selectionWidget.update_balance(self.balance)
+
+        print(purchase_info)
 
         self.centralWidgets.setCurrentWidget(self.successWidget)
         self.controlButton.setText("Back")
