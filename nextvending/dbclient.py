@@ -30,11 +30,28 @@ class DBClient:
 
     def add_new_transaction(self, transaction_data):
         # TODO
-        query = """INSER INTO product_transaction 
-                   VALUES (uuid_generate_v4())"""
+        query = "INSERT INTO product_transactions VALUES (uuid_generate_v4(), {price}, {quantity_remaining}, TO_TIMESTAMP('{timestamp}'), '{product_id}', '{machine_id}');".format(
+            price=transaction_data["price"],
+            quantity_remaining=transaction_data["quantity_remaining"],
+            timestamp=transaction_data["timestamp"],
+            product_id=transaction_data["product_id"],
+            machine_id=transaction_data["machine_id"]
+        )
+        self._cur.execute(query)
+        self._conn.commit()
+
 
     def add_new_payment(self, payment_data):
         # TODO
-        pass
+        query = "INSERT INTO payment_transactions VALUES (uuid_generate_v4(), {amount}, '{user_id}', '{first_name}', '{last_name}', TO_TIMESTAMP('{timestamp}'), '{machine_id}');".format(
+            amount=payment_data["amount"],
+            user_id=payment_data["user_id"],
+            first_name=payment_data["first_name"],
+            last_name=payment_data["last_name"],
+            timestamp=payment_data["timestamp"],
+            machine_id=payment_data["machine_id"],
+        )
+        self._cur.execute(query)
+        self._conn.commit()
 
     

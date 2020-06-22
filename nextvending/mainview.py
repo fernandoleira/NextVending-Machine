@@ -1,6 +1,8 @@
+from datetime import datetime
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from mailclient import MailClient
+from dbclient import DBClient
 from paymentwidget import PaymentWidget
 from selectionwidget import SelectionWidget
 from successwidget import SuccessWidget
@@ -17,7 +19,8 @@ class MainView(QtWidgets.QWidget):
         self._conf = conf
         self._products = products
 
-        self.mailClient = MailClient(self._conf)
+        self.dbClient = DBClient(self._conf["DATABASE_CLIENT"]) 
+        self.mailClient = MailClient(self._conf["MAIL_CLIENT"])
 
         self.balance = self._conf["PRODUCT_TRANSACTIONS"]["CURRENT_BALANCE"]
 
@@ -68,10 +71,8 @@ class MainView(QtWidgets.QWidget):
         self.controlButton.clicked.connect(self.change_window)
         self.verticalLayout.addWidget(self.controlButton)
 
-    def transactions_to_balance(self, new_transactions):
-        for transaction in new_transactions:
-            self.balance += transaction["amount"]
-        
+    def transaction_to_balance(self, new_transaction):
+        self.balance += new_transaction["amount"]
         self.balanceLabel.setText("${:0.2f}".format(self.balance))
         self.selectionWidget.update_balance(self.balance)
 
@@ -89,10 +90,14 @@ class MainView(QtWidgets.QWidget):
                 exit()
 
         elif self.centralWidgets.currentIndex() == 1:
-            print("Reading last transactions...")
+            print("Reading last payments...")
             transaction_req = self.mailClient.get_last_transactions()
             if transaction_req[0] and len(transaction_req[1]) > 0:
-                self.transactions_to_balance(transaction_req[1])
+                for payment in transaction_req[1]:
+                    payment["machine_id"] = self._conf["MACHINE_PROFILE"]["MACHINE_ID"]
+
+                    self.dbClient.add_new_payment(payment)
+                    self.transaction_to_balance(payment)
             else:
                 if transaction_req[0] == 0:
                     print(transaction_req[1])
@@ -109,12 +114,13 @@ class MainView(QtWidgets.QWidget):
             self.controlButton.setText("Check Payment")
 
     @QtCore.pyqtSlot(dict)
-    def new_purchase_event(self, purchase_info):
-        self.balance -= purchase_info['product_price']
+    def new_purchase_event(self, transaction_info):
+        transaction_info["machine_id"] = self._conf["MACHINE_PROFILE"]["MACHINE_ID"]
+        self.dbClient.add_new_transaction(transaction_info)
+
+        self.balance -= transaction_info['price']
         self.balanceLabel.setText("${:0.2f}".format(self.balance))
         self.selectionWidget.update_balance(self.balance)
-
-        print(purchase_info)
 
         self.centralWidgets.setCurrentWidget(self.successWidget)
         self.controlButton.setText("Back")

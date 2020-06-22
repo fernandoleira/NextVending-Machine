@@ -10,10 +10,10 @@ class MailClient:
         # Email IMAP parameters
         self._IMAP_EMAIL = os.getenv("IMAP_EMAIL")
         self._IMAP_PWD = os.getenv("IMAP_PWD")
-        self._IMAP_SERVER = mail_conf["MAIL_CLIENT"]["IMAP_SERVER"]
-        self._IMAP_PORT = mail_conf["MAIL_CLIENT"]["IMAP_PORT"]
-        self._MAIL_BOX = mail_conf["MAIL_CLIENT"]["MAIL_BOX"]
-        self._DEL_MAIL_BOX = mail_conf["MAIL_CLIENT"]["DEL_MAIL_BOX"]
+        self._IMAP_SERVER = mail_conf["IMAP_SERVER"]
+        self._IMAP_PORT = mail_conf["IMAP_PORT"]
+        self._MAIL_BOX = mail_conf["MAIL_BOX"]
+        self._DEL_MAIL_BOX = mail_conf["DEL_MAIL_BOX"]
 
         # Setup client and login
         self.mailClient = imaplib.IMAP4_SSL(self._IMAP_SERVER)
@@ -34,7 +34,7 @@ class MailClient:
         self.mailClient.close()
         self.mailClient.logout()
 
-    #
+    # Function to return the pending transactions from the email inbox
     def get_last_transactions(self):
         rv, data = self.mailClient.select(self._MAIL_BOX, readonly=True)
         if rv != 'OK':
@@ -62,15 +62,14 @@ class MailClient:
             amount = html_email.xpath('//td//span//text()')[-1][3:]
             user_id_url = html_email.xpath('//td//a[contains(@href, "user_id")]')[0].get("href").split('/')[-1]
             user_id = user_id_url[0:user_id_url.find('?')]
-            payment_id = html_email.xpath('//div[contains(text(), "Money")]//text()')[-1].strip().split()[-1]
 
-            transaction = {
-                'payment_id': payment_id, 
-                'amount': float(amount), 
-                'first_name': full_name[0:full_name.find(" ")], 
-                'last_name': full_name[full_name.find(" ")+1:],
-                'datetime': datetime.timestamp(dateparser.parse(raw_email["date"]))
-            }
+            transaction = dict(
+                amount=float(amount), 
+                user_id=user_id,
+                first_name=full_name[0:full_name.find(" ")], 
+                last_name=full_name[full_name.find(" ")+1:],
+                timestamp=datetime.timestamp(dateparser.parse(raw_email["date"]))
+            )
 
             last_transactions.append(transaction)
 
