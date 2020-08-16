@@ -130,6 +130,7 @@ dmypy.json
 
 # Local Test
 tests-local
+hardware-design
 
 # VSCode Docs
 .vscode

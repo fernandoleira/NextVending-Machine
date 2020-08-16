@@ -8,8 +8,8 @@ from datetime import datetime
 class MailClient:
     def __init__(self, mail_conf):
         # Email IMAP parameters
-        self._IMAP_EMAIL = os.getenv("IMAP_EMAIL")
-        self._IMAP_PWD = os.getenv("IMAP_PWD")
+        self._IMAP_EMAIL = mail_conf["IMAP_EMAIL"] #os.getenv("IMAP_EMAIL")
+        self._IMAP_PWD = mail_conf["IMAP_PWD"] #os.getenv("IMAP_PWD")
         self._IMAP_SERVER = mail_conf["IMAP_SERVER"]
         self._IMAP_PORT = mail_conf["IMAP_PORT"]
         self._MAIL_BOX = mail_conf["MAIL_BOX"]

@@ -1,5 +1,5 @@
 from datetime import datetime
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import Qt, QtCore, QtGui, QtWidgets
 
 from mailclient import MailClient
 from dbclient import DBClient
@@ -25,11 +25,9 @@ class MainView(QtWidgets.QWidget):
         self.balance = self._conf["PRODUCT_TRANSACTIONS"]["CURRENT_BALANCE"]
 
         self.paymentWidget = PaymentWidget()
-
+        self.successWidget = SuccessWidget()
         self.selectionWidget = SelectionWidget(self._products, self.balance)
         self.selectionWidget.signals.new_purchase.connect(self.new_purchase_event)
-
-        self.successWidget = SuccessWidget()
 
         self._init_layout()
 
@@ -65,9 +63,12 @@ class MainView(QtWidgets.QWidget):
         self.verticalLayout.addWidget(self.balanceLabel)
 
         self.controlButton = QtWidgets.QPushButton()
-        self.controlButton.setMaximumWidth(self.width() * 0.75)
         self.controlButton.setObjectName("ControlButton")
         self.controlButton.setText("Check Payment")
+        controlPolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Fixed)
+        controlPolicy.setHorizontalStretch(0)
+        controlPolicy.setVerticalStretch(0)
+        self.controlButton.setSizePolicy(controlPolicy)
         self.controlButton.clicked.connect(self.change_window)
         self.verticalLayout.addWidget(self.controlButton)
 
