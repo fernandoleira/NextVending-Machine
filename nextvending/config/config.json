@@ -32,5 +32,10 @@
         "USER": "postgres",
         "PASSWORD": "postgres",
         "DATABASE": "nextvending"
+    },
+    "SERIAL_CLIENT": {
+        "PORT": "COM3",
+        "BAUDRATE": 9600,
+        "TIMEOUT": 5
     }
 }

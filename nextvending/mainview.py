@@ -1,3 +1,4 @@
+import serial
 from datetime import datetime
 from PyQt5 import Qt, QtCore, QtGui, QtWidgets
 
@@ -19,6 +20,7 @@ class MainView(QtWidgets.QWidget):
         self._conf = conf
         self._products = products
 
+        self.serialClient = serial.Serial(self._conf["SERIAL_CLIENT"]["PORT"], self._conf["SERIAL_CLIENT"]["BAUDRATE"], timeout=self._conf["SERIAL_CLIENT"]["TIMEOUT"])
         self.dbClient = DBClient(self._conf["DATABASE_CLIENT"]) 
         self.mailClient = MailClient(self._conf["MAIL_CLIENT"])
 
@@ -77,6 +79,9 @@ class MainView(QtWidgets.QWidget):
         self.balanceLabel.setText("${:0.2f}".format(self.balance))
         self.selectionWidget.update_balance(self.balance)
 
+    def close_serial(self):
+        self.serialClient.close()
+
     # ============================== SLOTS ==============================
     @QtCore.pyqtSlot()
     def change_window(self):
@@ -126,4 +131,9 @@ class MainView(QtWidgets.QWidget):
         self.centralWidgets.setCurrentWidget(self.successWidget)
         self.controlButton.setText("Back")
         self.successWidget.start()
+
+        serial_msg = "{}\n".format(transaction_info['serial'])
+        self.serialClient.write(serial_msg.encode('utf-8'))
+        self.serialClient.flush()
+        #res = self.serialClient.read().decode('utf-8')
         

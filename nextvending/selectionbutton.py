@@ -8,9 +8,10 @@ class SelectionSignals(QtCore.QObject):
 
 
 class SelectionButton(QtWidgets.QFrame):
-    def __init__(self, selection_item):
+    def __init__(self, selection_item, serial):
         QtWidgets.QFrame.__init__(self)
         self.setObjectName("SelectionButton")
+        self.serial = serial
         self.resize(225, 225)
         self.setMinimumSize(self.width(), self.height())
         self.setMaximumSize(self.width(), self.height())
@@ -96,6 +97,7 @@ class SelectionButton(QtWidgets.QFrame):
 
             purchase_info = dict(
                 timestamp=int(datetime.timestamp(datetime.now())), 
+                serial=self.serial,
                 product_id=self.id, 
                 price=self.price, 
                 quantity_remaining=self.quantity

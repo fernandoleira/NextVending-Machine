@@ -53,4 +53,5 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @QtCore.pyqtSlot()
     def close_app(self):
+        self.mainView.close_serial()
         self.close()

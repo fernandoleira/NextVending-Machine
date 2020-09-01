@@ -17,16 +17,16 @@ class SelectionWidget(QtWidgets.QWidget):
         self.gridLayout = QtWidgets.QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
 
-        self.selectButton_1 = SelectionButton(products["PRODUCT_1"])
+        self.selectButton_1 = SelectionButton(products["PRODUCT_1"], '1')
         self.gridLayout.addWidget(self.selectButton_1, 0, 0, 1, 1)
 
-        self.selectButton_2 = SelectionButton(products["PRODUCT_2"])
+        self.selectButton_2 = SelectionButton(products["PRODUCT_2"], '2')
         self.gridLayout.addWidget(self.selectButton_2, 0, 1, 1, 1)
 
-        self.selectButton_3 = SelectionButton(products["PRODUCT_3"])
+        self.selectButton_3 = SelectionButton(products["PRODUCT_3"], '3')
         self.gridLayout.addWidget(self.selectButton_3, 1, 0, 1, 1)
 
-        self.selectButton_4 = SelectionButton(products["PRODUCT_4"])
+        self.selectButton_4 = SelectionButton(products["PRODUCT_4"], '4')
         self.gridLayout.addWidget(self.selectButton_4, 1, 1, 1, 1)
 
         self.connect_button_signals()
